@@ -6,8 +6,8 @@
 
 ## 项目代码
 
-- [码云]()
-- [GitHub]()
+- [码云](https://gitee.com/wzhouzhou/privateBlog/tree/master)
+- [GitHub](https://github.com/wzz1206414629/privateBlog)
 
 ## 技术栈
 
