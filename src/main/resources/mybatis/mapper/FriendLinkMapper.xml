@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzz.mapper.FriendLinkMapper">
+
+<!--    查询所有的友链好友信息-->
+    <select id="queryAllFriend" resultType="FriendLink">
+        select * from friendlink;
+    </select>
+
+<!--    添加友链-->
+    <insert id="addFriendLink">
+        insert into friendlink (blogName,url) values (#{name},#{url})
+    </insert>
+
+<!--    删除友链-->
+    <delete id="deleteLink" parameterType="_int">
+        delete from friendlink where id = #{id}
+    </delete>
+
+<!--    根据id查询友链-->
+    <select id="queryLinkById" parameterType="_int" resultType="FriendLink">
+        select * from friendlink where id=#{id}
+    </select>
+
+<!--    更新友链信息-->
+    <update id="updateLink">
+        update friendlink set blogName=#{name},url=#{url} where id=#{id}
+    </update>
+</mapper>

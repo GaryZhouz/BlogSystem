@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>普通用户后台</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/amazeui.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body style="padding-top: 70px; background-color:#f1f1f1;">
+<div th:replace="commons/commonUserAdmin/topbar::topbar"></div>
+<div class="container">
+    <div class="row">
+
+        <div th:replace="commons/commonUserAdmin/leftbar::leftbar"></div>
+
+        <div class="col-md-9">
+
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-record"></span>&nbsp;个人中心</a></li>
+            </ul>
+            <div class="tab-content"><br>
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <div class="row">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-9">
+                            <h4>
+                                <div class="row">
+                                    <div class="col-md-3">用户名</div>
+                                    <div class="col-md-9" th:text="${user.username}"></div>
+                                </div><br>
+
+                                <div class="row">
+                                    <div class="col-md-3">真实姓名</div>
+                                    <div class="col-md-9" th:text="${user.trueName}"></div>
+                                </div><br>
+
+
+                                <div class="row">
+                                    <div class="col-md-3">性别</div>
+                                    <div class="col-md-9" th:if="${user.gender}==1"  th:text="男"></div>
+                                    <div class="col-md-9" th:if="${user.gender}==0"  th:text="女"></div>
+                                </div><br>
+
+                                <div class="row">
+                                    <div class="col-md-3">qq</div>
+                                    <div class="col-md-9" th:text="${user.qq}"></div>
+                                </div><br>
+
+                                <div class="row">
+                                    <div class="col-md-3">wechat</div>
+                                    <div class="col-md-9" th:text="${user.wechat}"></div>
+                                </div><br>
+
+                                <div class="row">
+                                    <div class="col-md-3">个性签名</div>
+                                    <div class="col-md-9"  th:text="${user.personalBrief}"> </div>
+                                </div><br>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div style="position: fixed; bottom: 5px; right: 10px;">
+            <div class="pull-right"><a href="" target="_blank">Power By Wangzz</a>&nbsp;&nbsp;</div>&nbsp;&nbsp;
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+    //后台右上角的头像图标
+    $("#userIcon").attr('src','http://localhost:8080/'+[[${user.avatarImgUrl}]])
+</script>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>blog</title>
+    <link rel="stylesheet" th:href="@{/css/amazeui.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/articleType.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}" charset="utf-8">
+    <script th:src="@{/js/jquery.js}"></script>
+
+</head>
+<body>
+
+<!--引入公共的头部-->
+<div th:replace="~{commons/header::topbar}"></div>
+
+<!--主体部分-->
+<div class="am-u-sm-6 am-u-lg-offset-3">
+
+    <div class="am-scrollspy-init am-scrollspy-inview am-animation-scale-down" data-am-scrollspy="{animation: 'scale-down'}">
+        <h1>关于</h1>
+        <p><i class="am-icon-quote-left " style="float: left"></i></p><br>
+        <div class="info">
+            <p class="info" style="text-align: center">
+                一个小小的个人博客系统
+                <br>
+                但是功能俱全的博客系统~!
+                <br>
+
+                <a href="https://gitee.com/wzhouzhou/vue_wzz_cloudMusic" target="_blank">推荐项目(高仿网易云音乐)</a>
+                <br>
+                <a href="https://www.bilibili.com/video/BV1NC4y1b7eL" target="_blank">预览项目地址</a>
+            </p>
+        </div>
+        <p><i class="am-icon-quote-right " style="float: right"></i></p><br><hr>
+    </div>
+
+</div>
+
+<div class="am-u-sm-12">
+    <!--引用脚部-->
+    <div th:replace="commons/footer::footer"></div>
+</div>
+
+
+
+</body>
+<script type="text/javascript" th:inline="javascript">
+    //上边框头像跟个人信息栏头像同步地址
+    $("#topbar_img").attr('src','http://localhost:8080/'+[[${topbar_imgUrl}]]);
+
+</script>
+
+</html>

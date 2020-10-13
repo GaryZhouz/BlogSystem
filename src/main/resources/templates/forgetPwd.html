@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>找回密码</title>
+    <link rel="stylesheet" th:href="@{/css/amazeui.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/layui.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/layui.js}"></script>
+</head>
+
+<style>
+    .am-panel{
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    #header-info h1,p{
+        text-align: center;
+        font-weight: 400;
+    }
+</style>
+
+<body>
+
+<!--引入公有头部-->
+
+<div th:replace="~{commons/header::topbar}"></div>
+
+<div class="am-g" id="header-info">
+    <h1><strong>客官,有点小难受啊~</strong></h1>
+    <p>快从头来过⑧<br>找回通行证</p>
+</div>
+
+<hr>
+
+    <div class="am-u-sm-4 am-u-sm-offset-4">
+        <section class="am-panel am-panel-default" style="height: 400px;">
+            <header class="am-panel-hd">
+                <h3 class="am-panel-title" style="text-align: center">找回通行证</h3>
+            </header>
+            <div class="am-panel-bd">
+
+                <form class="am-form am-form-horizontal" th:action="@{findBackPwd}"  method="post">
+                    <div class="am-form-group">
+                        <label for="username" class="am-u-sm-2 am-form-label">原账号:</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" required name="oldUsername" id="username" placeholder="大侠,请输入您原来的武林称呼叭">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="trueName" class="am-u-sm-2 am-form-label">真实姓名:</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" required name="trueName" id="trueName" placeholder="大侠,验证你的真实姓名叭">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-select-1" class="am-u-sm-2 am-form-label">性别:</label>
+                        <div class="am-u-sm-10">
+                            <select id="doc-select-1" name="gender">
+                                <option value="1">男</option>
+                                <option value="0">女</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label">新密码:</label>
+                        <div class="am-u-sm-10">
+                            <input type="password" required name="newPassword" id="doc-ipt-pwd-2" placeholder="设置新的通行证叭">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <div class="am-u-sm-10 am-u-sm-offset-2">
+                            <input type="submit" id="submitBtn" class="am-btn am-btn-primary" value="验证" style="border-radius: 80px;"></input>
+                            <span style="color: red;font-size: 18px;" th:text="${tip}"></span>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </section>
+    </div>
+<!--引用脚部-->
+<div th:replace="commons/footer::footer"></div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+    //上边框头像跟个人信息栏头像同步地址
+    $("#topbar_img").attr('src','http://localhost:8080/'+[[${topbar_imgUrl}]]);
+</script>
+</html>

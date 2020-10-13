@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--普通用户后台的管理左边框-->
+<div class="col-md-3" th:fragment="leftbar">
+    <div class="list-group">
+        <a th:href="@{/userAdmin/toUpdateUserInfo/}+@{${session.username}}" class="list-group-item">
+            <span class="glyphicon glyphicon-list-alt"></span>&nbsp;修改资料 </a>
+
+        <a th:href="@{/userAdmin/toUpdatePwd/}+@{${session.username}}" class="list-group-item">
+            <span class="glyphicon glyphicon-lock"></span>&nbsp;修改密码</a>
+
+        <a th:href="@{/userAdmin/toCommentList/}+@{${session.username}}" class="list-group-item">
+            <span class="glyphicon glyphicon-comment"></span>&nbsp;我的评论</a>
+    </div>
+</div>
+
+</html>

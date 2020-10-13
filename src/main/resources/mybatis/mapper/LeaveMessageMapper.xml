@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzz.mapper.LeaveMessageMapper">
+
+<!--    添加一条留言-->
+    <insert id="addLeaveMessage">
+        insert into leavemessage (title,content,name,email,time) values (#{title},#{content},#{name},#{email},#{time})
+    </insert>
+
+<!--    查询最近的留言-->
+    <select id="queryAllLeaveMessageByLimit" resultType="LeaveMessage">
+        select * from leavemessage group by time desc limit 0,6;
+    </select>
+
+<!--    查询所有留言-->
+    <select id="queryAllLeaveMessage" resultType="LeaveMessage">
+        select * from leavemessage
+    </select>
+
+<!--    删除留言-->
+    <delete id="deleteLeaveMessage" parameterType="_int">
+        delete from leavemessage where id=#{id}
+    </delete>
+
+<!--    根据id查询留言-->
+    <select id="queryLeaveMessageById" resultType="LeaveMessage">
+        select * from leavemessage where id=#{id}
+    </select>
+
+<!--    更新留言信息-->
+    <update id="updateLeaveMessage">
+        update leavemessage set title=#{title},content=#{content},name=#{name},email=#{email} where id=#{id}
+    </update>
+</mapper>

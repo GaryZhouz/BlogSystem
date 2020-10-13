@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>普通用户后台</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/amazeui.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body style="padding-top: 70px; background-color:#f1f1f1;">
+<div th:replace="commons/commonUserAdmin/topbar::topbar"></div>
+<div class="container">
+    <div class="row">
+
+        <div th:replace="commons/commonUserAdmin/leftbar::leftbar"></div>
+
+        <div class="col-md-9">
+
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;修改资料</a></li>
+            </ul>
+            <div class="tab-content"><br>
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <div>
+                        <form id="info" method="post" th:action="@{/userAdmin/updateUserInfo}" enctype="multipart/form-data">
+                            <input type="hidden" name="username" th:value="${session.username}">
+                            <div class="form-group">
+                                <label>真实姓名</label>
+                                <input type="text" name="trueName" class="form-control" th:value="${user.trueName}">
+                            </div>
+
+                            <div class="form-group">
+                                <label>性别</label>
+                                <select class="form-control" name="gender">
+                                    <option value="1" th:if="${user.gender}==1" th:selected="selected">男</option>
+                                    <option value="0" th:if="${user.gender}==0" th:selected="selected">女</option>
+
+                                    <option value="1" th:if="${user.gender}==0">男</option>
+                                    <option value="0" th:if="${user.gender}==1">女</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>qq</label>
+                                <input type="text" name="qq" class="form-control" th:value="${user.trueName}">
+                            </div>
+
+                            <div class="form-group">
+                                <label>wechat</label>
+                                <input type="text" name="wechat" class="form-control" th:value="${user.wechat}">
+                            </div>
+
+                            <div class="form-group">
+                                <label>个性签名</label>
+                                <textarea class="form-control" name="signature" rows="3">[[${user.personalBrief}]]</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>头像：</label>
+                                <img th:src="@{/imgs/header.png}" class="img-thumbnail" id="avatarImg" width="140">
+                                <input type="file" id="paperPath" name="filename"/>
+                                <span id="te2" style="color: red">上传大小不能超过5M*上传文件类型必须为：jpg png</span>
+                            </div>
+
+                            <button type="submit" class="btn btn-default">修改</button>
+                        </form>
+                    </div>
+                </div>
+            </div><br><br>
+        </div>
+
+
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div style="position: fixed; bottom: 5px; right: 10px;">
+            <div class="pull-right"><a href="" target="_blank">Power By Wangzz</a>&nbsp;&nbsp;</div>
+            &nbsp;</div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+    //后台右上角的头像图标
+    $("#userIcon").attr('src','http://localhost:8080'+[[${user.avatarImgUrl}]]);
+
+    //文件上传的检测
+    $("#info").submit(function() {
+        var paperPath=$("#paperPath").val();//获取文件
+        var point = paperPath.lastIndexOf(".");
+        var type = paperPath.substr(point);//获取后缀
+        var fileSzie=$("#paperPath")[0].files[0].size;//获取文件大小,得到的值为字节类型
+        var judge=true;
+        if(type.valueOf()!=".jpg" && type.valueOf()!=".png"){
+            $("#te2").html("上传文件格式不正确");
+            judge=false;
+            if(fileSzie>5000000){
+                $("#te2").html("上传文件过大");
+                judge=false;
+            }
+        }else{
+            $("#te2").html("")
+        }
+        return judge;
+    });
+</script>
+</html>

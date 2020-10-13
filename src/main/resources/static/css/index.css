@@ -1,0 +1,83 @@
+#left_img{
+    width: 100px;
+    height: 100px;
+}
+
+.am-panel-footer a{
+    margin-left: 25px;
+}
+
+#first_icon {
+    margin-left: 105px;
+}
+
+.article-header,.article-title{
+    color: #7f7f7f;
+    font-weight: 500;
+    text-decoration: none;
+}
+.article-entry {
+    font-size: 16px;
+    padding: 10px 8px;
+    line-height: 2em;
+    color: #565a5f;
+}
+.article-btn{
+    padding: 3px 0;
+    border-bottom: 2px solid;
+    text-decoration: none;
+    color: #7f7f7f;
+}
+.widget {
+    background-color: #f2dede;
+    margin-left: 15px;
+    padding: 15px 15px;
+    line-height: 1.6em;
+    word-wrap: break-word;
+    font-size: 0.9em;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+.widget p{
+    text-align: center;
+}
+.myStory {
+    margin-top: 20px;
+    height: 100px;
+    margin-left: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+.bg-myStory {
+    height: 60px;
+    text-align: center;
+    background: repeating-linear-gradient(45deg, #8275fd, #8275fd 15px, #fd940c 0, #fd940c 30px);
+}
+
+.bg-myStory-a{
+    font-weight: 400;
+    font-size: 25px;
+    color: white;
+}
+.myStory-info{
+    text-align: center;
+    font-weight: 400;
+}
+.tag-cloud{
+    margin-top: 15px;
+    margin-left: 15px;
+}
+.site-default li{
+    list-style: none;
+}
+.am-panel{
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+.site{
+    margin-top: 15px;
+}
+
+/*主页侧边栏的样式*/
+am-offcanvas-content p{
+    font-family: 华文楷体;
+    font-weight: 400;
+}

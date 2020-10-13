@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Blog后台</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body style="background-color:#eee;">
+
+<div th:replace="~{commons/admin/topbar::top-bar}"></div>
+
+
+<div class="row">
+    <!--    引入共有侧边栏-->
+    <div th:replace="~{commons/admin/leftbar::left-bar}"></div>
+
+
+    <div class="col-xs-12 col-sm-9 col-md-10 pull-right" style="background-color:#FFFFFF;">
+        <div class="row bg-info text-center">
+            <h4>管理用户信息</h4>
+        </div><br>
+
+
+        <div class="container-fluid" style="min-height: 800px;">
+            <div class="row">
+
+                <form id="info" method="post" th:action="@{/admin/addUser}">
+                    <h4>带&nbsp;<b><span class="text-danger">*</span></b>&nbsp;号的为必填项</h4>
+                        <input type="hidden" class="form-control" name="oldUsername">
+                    <div class="form-group">
+                        <label>用户名：&nbsp;<b><span class="text-danger">*</span></b></label>
+                        <input type="text" required class="form-control" name="username">
+                    </div>
+
+                    <div class="form-group">
+                        <label>密码：&nbsp;<b><span class="text-danger">*</span></b></label>
+                        <input type="password" required class="form-control" name="password">
+                    </div>
+
+                    <div class="form-group">
+                        <label>真实姓名：&nbsp;<b><span class="text-danger">*</span></b></label>
+                        <input type="text" required class="form-control" name="trueName">
+                    </div>
+
+                    <div class="form-group">
+                        <label>性别：&nbsp;<b><span class="text-danger">*</span></b></label>
+                        <select class="form-control" name="gender">
+                            <option value="1">男</option>
+                            <option value="0">女</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>QQ：&nbsp;<b><span class="text-danger">*</span></b></label>
+                        <input type="text" required class="form-control" name="qq">
+                    </div>
+
+                    <div class="form-group">
+                        <label>wechat：&nbsp;<b><span class="text-danger">*</span></b></label>
+                        <input type="text" class="form-control" name="wechat">
+                    </div>
+
+                    <div class="form-group">
+                        <label>个性简介：</label>
+                        <textarea class="form-control" name="signature" rows="3">这个人很懒,还未有座右铭</textarea>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-default">添加</button>
+                    </div>
+                </form>
+            </div>
+        </div><br>
+        <div class="pull-right"><a href="" target="_blank">Power By Wangzz</a>&nbsp;&nbsp;</div>
+    </div>
+
+</div>
+</body>
+</html>

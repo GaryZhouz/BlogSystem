@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+    <link rel="stylesheet" th:href="@{/css/amazeui.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+</head>
+
+<style>
+    .am-panel{
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+
+
+    #header-info h1,p{
+        text-align: center;
+        font-weight: 400;
+    }
+</style>
+
+<body>
+
+<!--引入公有头部-->
+
+<div th:replace="~{commons/header::topbar}"></div>
+
+<div class="am-g" id="header-info">
+    <h1><strong>Hello,客官</strong></h1>
+    <p style="color: orange">在这里希望能够留下大侠的一点足迹<br>留言内容不限</p>
+</div>
+
+<hr>
+
+    <div class="am-u-sm-6 am-u-sm-offset-3">
+
+        <section class="am-panel am-panel-default" >
+            <header class="am-panel-hd">
+                <h3 class="am-panel-title" style="text-align: center">欢迎留言</h3>
+            </header>
+            <div class="am-panel-bd">
+
+                <form class="am-form am-form-horizontal" th:action="@{/addLeaveMessage}" method="post" >
+                    <div class="am-form-group">
+                        <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">留言标题:</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" required name="title" id="doc-ipt-3" placeholder="留言标题">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label  class="am-u-sm-2 am-form-label">留言内容:</label>
+                        <div class="am-u-sm-10">
+                            <textarea name="content" cols="30" rows="4"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label  class="am-u-sm-2 am-form-label">留言人姓名:</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" required name="username" placeholder="留言人姓名">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label  class="am-u-sm-2 am-form-label">留言人邮箱:</label>
+                        <div class="am-u-sm-10">
+                            <input type="email" required name="email" placeholder="留言人邮箱">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <div class="am-u-sm-10 am-u-sm-offset-2">
+                            <input type="submit" class="am-btn am-btn-primary" value="提交" style="border-radius: 80px;">
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </section>
+
+    </div>
+
+<div class="am-u-sm-12">
+    <!--引用脚部-->
+    <div th:replace="commons/footer::footer" style="margin-top: 100px;"></div>
+</div>
+
+</body>
+<script type="text/javascript" th:inline="javascript">
+    //上边框头像跟个人信息栏头像同步地址
+    $("#topbar_img").attr('src','http://localhost:8080/'+[[${topbar_imgUrl}]]);
+</script>
+</html>

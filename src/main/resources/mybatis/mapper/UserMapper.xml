@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzz.mapper.UserMapper">
+<!--    用户名查询用户-->
+    <select id="queryUserByUsername" resultType="User" parameterType="string">
+        select * from user where username=#{username}
+    </select>
+
+<!--    新增用户-->
+    <insert id="addUser" parameterType="User">
+        insert into
+        user(username,password,salt,trueName,gender,qq,wechat,personalBrief,avatarImgUrl)
+        values (#{username},#{password},#{salt},#{trueName},#{gender},#{qq},#{wechat},#{personalBrief},#{avatarImgUrl});
+    </insert>
+
+<!--    密码修改-->
+    <update id="updatePwd" parameterType="string">
+        update user set password=#{newPwd},salt=#{salt} where username=#{username}
+    </update>
+
+<!--    查询系统的管理员账户-->
+    <select id="queryAdminUser" resultType="User">
+        select * from user where roleId=2 limit 1;
+    </select>
+
+<!--    网站超级管理员信息修改-->
+    <update id="updateAdminUserInfo">
+        update user set username=#{username},trueName=#{trueName},gender=#{gender},qq=#{qq},
+        wechat=#{wechat},personalBrief=#{personalBrief},avatarImgUrl=#{avatarImgUrl}
+        where id=1
+    </update>
+
+<!--    查询所有用户的信息-->
+    <select id="queryAllUser" resultType="User">
+        select * from user where id>1;
+    </select>
+
+<!--    管理员用户用户管理界面 模糊搜索和分页-->
+    <select id="queryUserByLike" parameterType="map" resultType="User">
+        select * from user where username like #{username} limit #{start},#{pageSize}
+    </select>
+
+<!--根据用户名删除用户-->
+    <delete id="deleteUserByUsername" parameterType="string">
+        delete from user where username=#{username}
+    </delete>
+
+<!--    limit分页查询-->
+    <select id="queryByLimit" parameterType="_int" resultType="User">
+        select * from user limit #{start},#{pageSize}
+    </select>
+
+<!--    修改用户信息(用户名修改)-->
+    <update id="updateUserInfo" parameterType="string">
+        update user set username = #{username},trueName=#{trueName},gender=#{gender},
+        qq=#{qq},wechat=#{wechat},personalBrief=#{signature} where username=#{oldUsername}
+    </update>
+
+<!--    普通用户自行修改用户信息(用户名修改)-->
+    <update id="updateCommonUserInfo" parameterType="string">
+        update user set username = #{username},trueName=#{trueName},gender=#{gender},
+        qq=#{qq},wechat=#{wechat},personalBrief=#{signature},avatarImgUrl=#{avatarImgUrl} where username=#{username}
+    </update>
+</mapper>

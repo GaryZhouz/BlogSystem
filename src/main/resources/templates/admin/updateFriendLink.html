@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Blog后台</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body style="background-color:#eee;">
+
+<div th:replace="~{commons/admin/topbar::top-bar}"></div>
+
+
+<div class="row">
+    <!--    引入共有侧边栏-->
+    <div th:replace="~{commons/admin/leftbar::left-bar}"></div>
+    <!--主题内容-->
+    <div class="col-xs-12 col-sm-9 col-md-10 pull-right" style="background-color:#FFFFFF;margin-top: 60px;">
+
+        <div class="row bg-info text-center">
+            <h4>更新友情链接</h4>
+        </div><br>
+
+        <div class="container-fluid" style="min-height: 800px;">
+            <div class="row">
+                <form method="post" th:action="@{/admin/updateFriendLink}">
+
+                    <input type="hidden" name="id" th:value="${id}">
+                    <div class="form-group">
+                        <label>友链名称：&nbsp;<b><span class="text-danger">*</span></b></label>
+                        <input type="text" required class="form-control" name="name" th:value="${friendLink.getBlogName()}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>友链地址：&nbsp;<b><span class="text-danger">*</span></b></label>
+                        <input type="text" required class="form-control" name="url" th:value="${friendLink.getUrl()}">
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-default">修改</button>
+                    </div>
+
+                </form>
+            </div>
+        </div><br><br>
+
+        <div class="pull-right"><a href="" target="_blank">Power By Wangzz</a>&nbsp;&nbsp;</div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

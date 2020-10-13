@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Blog后台</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/amazeui.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body style="background-color:#eee;">
+
+<div th:replace="~{commons/admin/topbar::top-bar}"></div>
+
+
+<div class="row">
+
+    <!--    引入共有侧边栏-->
+    <div th:replace="~{commons/admin/leftbar::left-bar}"></div>
+
+    <div class="col-xs-12 col-sm-9 col-md-10 pull-right" style="background-color:#FFFFFF;">
+        <div class="row bg-info text-center">
+            <h4>评论管理</h4>
+        </div><br>
+        <div class="container-fluid" style="min-height: 800px;">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>评论id</th>
+                            <th>父id</th>
+                            <th>文章链接</th>
+                            <th>评论人</th>
+                            <th>被评论的人</th>
+                            <th>评论内容</th>
+                            <th>评论时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="comment : ${comments}">
+                            <td th:text="${comment.getId()}"></td>
+                            <td th:text="${comment.getPid()}"></td>
+                            <td th:text="${comment.getArticleId()}"></td>
+                            <td th:text="${comment.getAnswererName()}"></td>
+                            <td th:text="${comment.getRespondentName()}"></td>
+                            <td th:text="${comment.getCommentContent()}"></td>
+                            <td th:text="${comment.getCommentDate()}"></td>
+                            <td>
+                                <a class="btn-sm btn-danger" th:href="@{/admin/deleteComments/}+@{${comment.getId()}}">删除</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    共有<span th:text="${commentSize}" style="color:deeppink;font-size: 18px;"></span>条评论
+                    <h2 style="color: red">温馨提示: 删除评论会自动删除该评论下的所有子评论!!!</h2>
+                </div>
+            </div>
+        </div><br>
+        <div class="pull-right"> <div class="pull-right"><a href="" target="_blank">Power By Wangzz</a>&nbsp;&nbsp;</div></div>
+
+</div>
+</div>
+</body>
+</html>

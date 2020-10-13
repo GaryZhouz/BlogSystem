@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>blog</title>
+    <link rel="stylesheet" th:href="@{/css/amazeui.css}">
+    <link rel="stylesheet" th:href="@{/js/amazeui.js}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}" charset="utf-8">
+    <link rel="stylesheet" th:href="@{/css/articlePage.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+</head>
+<body>
+<!--引入公共的头部-->
+<div th:replace="~{commons/header::topbar}"></div>
+
+<!--主体部分-->
+<div class="am-u-sm-6 am-u-sm-offset-3">
+
+    <div class="article">
+        <div class="article-title">
+            <h1 th:text="${article.getArticleTitle()}"></h1>
+        </div>
+
+        <div class="article-header">
+            <div class="article-meta row" style="display: inline">
+                <span class="articleType am-badge am-badge-success">原创</span>
+                <i class="am-icon-calendar"><a href="#" th:text="${article.getPublishDate()}"></a></i>
+                <i class="am-icon-user" th:text="${article.getAuthor()}"></i>
+                <i class="am-icon-folder"><a href="" th:text="${article.getArticleType()}">分类</a></i>
+            </div>
+        </div>
+
+        <div class="article-i-say">
+            集中一点,登峰造极。
+            <span class="article-i-say-me">--- wzz</span>
+        </div>
+
+        <div class="article-content">
+            <p th:utext="${article.getArticleContent()}"></p>
+        </div>
+
+        <hr data-am-widget="divider" style="" class="am-divider am-divider-default" >
+
+        <div class="end-logo" style="text-align: center">
+            <i class="am-icon-btn am-success am-icon-lg">完</i>
+        </div>
+
+        <div class="give-reward" style="text-align: center">
+            <p><i class="am-icon-quote-left "></i></p>
+            <br>
+            <p class="show-weixin-pic">
+                <img th:src="@{/imgs/zfb.jpg}" style="width: 200px;height: 200px;">
+            </p>
+            <p class="">喜欢的话可以小小的zfb打赏一下哦~!</p><p>
+            <i class="am-icon-quote-right"></i>
+        </p>
+        </div>
+
+        <hr data-am-widget="divider" style="" class="am-divider am-divider-default" >
+
+        <div class="tags">
+            <a class="article-tags" href="" th:each="tag : ${article.getArticleTags().split(',')}">
+                <span class="am-icon-tag" style="color:#555555;"></span>[[${tag}]]
+            </a>
+        </div>
+
+        <div id="addLikes" class="like am-btn am-btn-danger">
+            <div class="likeHeart">
+                <i class="am-icon-heart-o" >&nbsp;&nbsp;喜欢&nbsp;</i><span id="like" th:text="${article.getLikes()}"></span>
+            </div>
+        </div>
+
+        <!--顶级评论-->
+        <div class="comment-top" th:if="${session.username}==null">
+
+            <div class="comment-top-input" style="margin-top: 25px;">
+                <div class="goToLogin">
+                    &nbsp;&nbsp;&nbsp;<a th:href="@{/toLogin}">登录</a>后才可以发表评论呦...
+                </div>
+            </div>
+            <div class="commentBtn">
+                <button type="button" class="am-btn am-btn-secondary">发表评论</button>
+            </div>
+        </div>
+
+
+        <!--       最顶级评论-->
+        <form th:action="@{/addTopComment}" method="post">
+            <div th:if="${session.username}!=null" style="margin-top: 25px;">
+                <input type="hidden" name="username" th:value="${session.username}">
+                <input type="hidden" name="articleId" th:value="${article.getId()}">
+                <textarea name="content" required class="comment-top-input" cols="110" rows="4"></textarea>
+                <div class="commentBtn">
+                    <button id="commentBtn" type="submit" class="am-btn am-btn-secondary">发表评论</button>
+                </div>
+            </div>
+
+        </form>
+
+
+
+    </div>
+
+
+    <div class="article-comment">
+        <div class="article-comment-top">
+            <span class="article-comment-word">评论</span>
+            <div class="article-comment-line"></div>
+        </div>
+        <div class="new-comment">
+            <i class="all-comment am-icon-ellipsis-v"></i>
+            全部评论（<span class="commentNum" th:text="${commentCount}"></span>）
+        </div>
+        <div class="all-comments">
+
+            <div class="visitorComment">
+                <div class="am-g" th:each="topComment,count : ${topComments}">
+                    <div class="visitorCommentImg am-u-sm-2 am-u-lg-1">
+                        <img th:src="@{${topComment.avatarImgUrl}}">
+                    </div>
+
+                    <div class="am-u-sm-10 am-u-lg-11">
+                        <div class="visitorInfo">
+                            <span class="visitorFloor" th:text="'#'+${commentSize - count.count + 1}+'楼'"></span>
+                            <span class="visitorName" th:text="${topComment.getAnswererName()}"></span>
+                            <span class="visitorPublishDate" th:text="${topComment.getCommentDate()}"></span>
+                        </div>
+                        <div class="visitorSay" th:text="${topComment.getCommentContent()}">
+
+                        </div>
+
+                        <div class="visitorReplyTime">
+                            <a><i class="replyReply am-icon-comment-o" th:onclick="showInput([[${topComment.getId()}]])">&nbsp;&nbsp;回复</i></a>
+                        </div>
+
+                        <!--回复(最顶层的评论)下的回复框-->
+                        <div class="reply-sub-comment-list am-animation-slide-bottom" th:id="'t'+${topComment.getId()}">
+                            <div class="replyWord">
+                                <div class="replyWordBtn">
+
+                                    <form th:action="@{/addCommentHaveRespondentName}" method="post">
+                                        <input type="hidden" name="username" th:value="${session.username}">
+                                        <input type="hidden" name="respondentName" th:value="${topComment.getAnswererName()}">
+                                        <input type="hidden" name="articleId" th:value="${article.getId()}">
+                                        <input type="hidden" name="pid" th:value="${topComment.getId()}">
+                                        <input type="text" required class="replyWordTextarea" style="height: 40px;" name="content" th:placeholder="'@'+${topComment.getAnswererName()}+'：'">
+                                        <button type="submit" class="sendReplyWordBtn am-btn am-btn-success">发送</button>
+                                    </form>
+
+                                    <button type="button" class="quitReplyWordBtn am-btn" th:onclick="noneInput([[${topComment.getId()}]])">取消</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--子评论-->
+                        <div class="sub-comment">
+                            <div class="sub-comment-list" th:if="${childComment.get(0).get(childInfo).getPid()}==${topComment.getId()}" th:each="childInfo,childInfoStat : ${childComment.get(0).keySet()}">
+                                <div class="visitorReplies">
+                                    <div class="visitorReply">
+                                        <div class="visitorReplyWords">
+                                            <a class="answerer" th:text="${childComment.get(0).get(childInfo).getAnswererName()}"></a>：
+                                            <a class="respondent"><span th:if="${childComment.get(0).get(childInfo).getRespondentName()}!=null">@</span>[[${childComment.get(0).get(childInfo).getRespondentName()}]] </a><span th:text="${childComment.get(0).get(childInfo).getCommentContent()}"></span>
+                                        </div>
+
+                                        <div class="visitorReplyTime">
+                                            <span class="visitorReplyTimeTime" th:text="${childComment.get(0).get(childInfo).getCommentDate()}"></span>
+                                            <a><i class="replyReply am-icon-comment-o" th:onclick="showChildInput([[${childComment.get(0).get(childInfo).getId()}]])" >&nbsp;&nbsp;回复</i></a>
+                                        </div>
+                                        <!--回复(子评论)下的回复框-->
+                                        <div class="reply-sub-comment-list am-animation-slide-bottom" th:id="'c'+${childComment.get(0).get(childInfo).getId()}">
+                                            <div class="replyWord">
+                                                <div class="replyWordBtn">
+
+                                                    <form th:action="@{/addCommentHaveRespondentName}" method="post">
+                                                        <input type="hidden" name="username" th:value="${session.username}">
+                                                        <input type="hidden" name="respondentName" th:value="${childComment.get(0).get(childInfo).getAnswererName()}">
+                                                        <input type="hidden" name="articleId" th:value="${childComment.get(0).get(childInfo).getArticleId()}">
+                                                        <input type="hidden" name="pid" th:value="${childComment.get(0).get(childInfo).getId()}">
+                                                        <input type="text" required class="replyWordTextarea" style="height: 40px;" name="content" th:placeholder="'@'+${childComment.get(0).get(childInfo).getAnswererName()}+'：'">
+                                                        <button type="submit" class="sendReplyWordBtn am-btn am-btn-success">发送</button>
+                                                    </form>
+
+                                                    <button type="button" class="quitReplyWordBtn am-btn" th:onclick="noneChildInput([[${childComment.get(0).get(childInfo).getId()}]])">取消</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed">
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="more-comment">
+                                <a><i class="moreComment am-icon-edit" th:onclick="showTextarea([[${topComment.getId()}]])"> 添加新评论</i></a>
+                            </div>
+                            <!--添加新评论的表单-->
+                            <div class="reply-sub-comment-list am-animation-slide-bottom" th:id="${topComment.getId()}">
+                                <div class="replyWord">
+                                    <div class="replyWordBtn">
+
+                                        <form th:action="@{/addSecendComment}" method="post">
+                                            <input type="hidden" name="username" th:value="${session.username}">
+                                            <input type="hidden" name="articleId" th:value="${article.getId()}">
+                                            <input type="hidden" name="pid" th:value="${topComment.getId()}">
+                                            <textarea class="replyWordTextarea" name="content" placeholder="写下你的评论..."></textarea>
+                                            <button type="submit" class="sendReplyWordBtn am-btn am-btn-success">发送</button>
+                                        </form>
+
+                                        <button type="button" class="quitReplyWordBtn am-btn" th:onclick="noneTextarea([[${topComment.getId()}]])">取消</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <!--                            子评论借宿-->
+                    </div>
+                </div>
+                <!--                    一条评论借宿-->
+                <hr>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="am-u-sm-12">
+        <!--引用脚部-->
+        <div th:replace="commons/footer::footer"></div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+    //上边框头像跟个人信息栏头像同步地址
+    $("#topbar_img").attr('src','http://localhost:8080/'+[[${topbar_imgUrl}]]);
+
+    //标记点赞
+    var flag = true;
+    //点赞的ajax请求
+    $("#addLikes").click(function (){
+        if ([[${session.username}]]!=null && flag ===true){//如果用户已登录
+            $.post({
+                url:'/checkLike',
+                data:{"id":[[${article.getId()}]]},//传递登陆的用户名
+                success:function(data){
+                    $("#like")[0].innerText = data;
+                }
+            });
+            flag = false;
+        }else{//跳到登陆界面
+            //如果没点过赞
+            if (flag==true) window.location.href = '/toLogin';
+            else alert("看一次,只能点一次赞哦,下次再来吧~!")
+        }
+    });
+
+    /*
+    顶级评论下的添加新评论
+    */
+    //点击添加新评论按钮的时候展示输入对应的输入框
+    function showTextarea(id) {
+        if ([[${session.username}]]==null){//如果用户未登录
+            window.location.href = '/toLogin';
+        }
+        $('#'+id).css("display","block");
+    }
+
+    //点击取消按钮对应的输入框隐藏
+    function noneTextarea(id) {
+        $('#'+id).css("display","none");
+    }
+
+
+    /*
+    回复顶级评论的按钮
+     */
+    //点击回复时候的输入框显示
+    function showInput(id) {
+        if ([[${session.username}]]==null){//如果用户未登录
+            window.location.href = '/toLogin';
+        }
+        $('#t'+id).css("display","block");
+    }
+    //点击隐藏输入框
+    function noneInput(id) {
+        $('#t'+id).css("display","none");
+    }
+
+    /*
+    子评论的回复按钮
+     */
+    //点击显示回复框
+    function showChildInput(id) {
+        if ([[${session.username}]]==null){//如果用户未登录
+            window.location.href = '/toLogin';
+        }
+        $('#c'+id).css("display","block");
+    }
+    //隐藏回复框
+    function noneChildInput(id) {
+        $('#c'+id).css("display","none");
+    }
+</script>
+</html>

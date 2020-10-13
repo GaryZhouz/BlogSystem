@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!--头部菜单栏-->
+<header class="am-topbar" th:fragment="topbar" style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 1px 0 rgba(0, 0, 0, 0.1);background: white">
+    <h1 class="am-topbar-brand">
+        <img id="topbar_img" alt="头部头像">
+        <a th:href="@{/}">Hello World</a>
+    </h1>
+
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+    <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+        <ul class="am-nav am-nav-pills am-topbar-nav">
+            <li id="item1"><a th:href="@{/}"><span class="am-icon-home"></span>首页</a></li>
+            <li><a th:href="@{/articleTypePage/全部分类/}+@{1}"><span class="am-icon-bars"></span> 分类</a></li>
+            <li><a th:href="@{/toTagCloud/}+@{1}"><span class="am-icon-tags"></span> 标签</a></li>
+            <li><a th:href="@{/friendLinkPage}"><span class="am-icon-paper-plane"></span> 友链</a></li>
+            <li><a th:href="@{/toLeaveMessage}"><span class="am-icon-archive"></span> 留言</a></li>
+            <li><a th:href="@{/toAboutMe}"><span class="am-icon-user"></span> 关于</a></li>
+        </ul>
+
+        <div class="am-topbar-right">
+            <a th:if="${session.username}==null" th:href="@{/toRegister}" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"><span style="color: white">注册</span></a>
+
+            <a th:if="${session.username}!=null" th:href="@{/admin}" class="am-btn am-btn-primary am-topbar-btn am-btn-sm"><span style="color: white">后台</span></a>
+            <a th:href="@{/lgout}" th:if="${session.username}!=null" class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span style="color: white">注销</span></a>
+        </div>
+
+        <div class="am-topbar-right">
+            <span th:if="${session.username}!=null">欢迎您，</span>
+            <span th:if="${session.username}!=null" th:text="${session.username}" style="color: salmon;"></span>
+            <a th:href="@{/toLogin}" th:if="${session.username}==null" class="am-btn am-btn-primary am-topbar-btn am-btn-sm"><span style="color: white">登录</span></a>
+        </div>
+
+    </div>
+</header>
+
+</html>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzz.mapper.ArticleMapper">
+
+<!--  新增一篇文章  -->
+    <insert id="addArticle">
+        insert into article (author,articleTitle,articleContent,articleType,articleTags,publishDate,updateDate)
+        values (#{author},#{articleTitle},#{articleContent},#{articleType},#{articleTags},#{publishDate},#{updateDate});
+    </insert>
+
+<!--    查询所有文章-->
+    <select id="queryAllArticle" resultType="Article">
+        SELECT * FROM article
+    </select>
+    
+<!--分页查询limit-->
+    <select id="queryArticleByLimit" resultType="Article">
+        select * from article order by publishDate desc limit #{start},#{pageSize}
+    </select>
+
+<!--根据文章id查询文章-->
+    <select id="queryArticleById" resultType="Article">
+        select * from article where id=#{id}
+    </select>
+    
+<!--    分组查询文章类型-->
+    <select id="queryArticleType" resultType="map">
+        SELECT convert(count(*),char) as num,articleType FROM article GROUP BY articleType;
+    </select>
+
+<!--    根据文章类型查询文章 分页-->
+    <select id="queryArticleByType" resultType="Article">
+        select * from article where articleType=#{type} limit #{start},#{pageSize}
+    </select>
+
+<!--根据文章id删除文章-->
+    <delete id="deleteArticle">
+        delete from article where id=#{id}
+    </delete>
+
+<!--    根据id更新文章信息-->
+    <update id="updateArticle">
+        update article set articleTitle=#{title},author=#{author},articleContent=#{content},articleTags=#{tags},
+        articleType=#{type},likes=#{likes},updateDate=#{updateTime}
+        where id=#{id}
+    </update>
+
+<!--    文章检索并分页limit-->
+    <select id="queryArticleByTitleLimit" resultType="Article">
+        select * from article where articleTitle like #{title} limit #{start},#{pageSize}
+    </select>
+
+<!--    查询最近的五篇文章-->
+    <select id="queryArticleRecent" resultType="Article">
+        select * from article order by publishDate DESC LIMIT 0,5
+    </select>
+
+<!--    根据标签查询文章-->
+    <select id="queryArticleByTags" resultType="Article">
+        select * from article where articleTags like #{tag} limit #{start},#{pageSize};
+    </select>
+
+<!--    查询标签的数-->
+    <select id="queryAllTags" resultType="map">
+        select articleTags from article group by articleTags;
+    </select>
+
+<!--    点赞数增加-->
+    <update id="updateLikes">
+        update article set likes = likes+1 where id=#{id}
+    </update>
+</mapper>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div class="row" th:fragment="top-bar">
+    <nav id="navbar-example" style="background: #bd0707" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-example-js-navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="">Blog管理中心</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a th:href="@{/}" title="首页" target="_blank"><span class="glyphicon glyphicon-home"></span></a></li>
+                    <li><a th:href="@{/admin/toEditorPage}" title="写文章"><span class="glyphicon glyphicon-pencil"></span></a></li>
+                    <li><a th:href="@{/admin/toAdminUpdateInfo}" title="修改个人信息"><span class="glyphicon glyphicon-list-alt"></span></a></li>
+                    <li><a th:href="@{/admin/toAdminUpdatePwd}" title="修改登录密码"><span class="glyphicon glyphicon-lock"></span></a></li>
+                    <li><a th:href="@{/lgout}" title="退出"><span class="glyphicon glyphicon-log-out"></span></a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="fat-menu" class="dropdown">
+                        <a th:text="'欢迎,'+${session.username}" id="drop3" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" th:href="@{/admin/toAdminUpdatePwd}"><span class="glyphicon glyphicon-lock"></span>&nbsp;&nbsp;修改登录密码</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" th:href="@{/admin/toAdminUpdateInfo}"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;修改个人信息</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" th:href="@{/lgout}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+</html>

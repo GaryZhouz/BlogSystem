@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>blog</title>
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/amazeui.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/amazeui.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}" charset="utf-8">
+</head>
+<body>
+
+<!--引入公共的头部-->
+    <div th:replace="~{commons/header::topbar}"></div>
+
+<!--主体部分-->
+    <div class="am-g">
+        <div class="am-u-sm-3" hidden id="left-bar">
+            <!--左侧个人信息面板-->
+            <section class="am-panel am-panel-default">
+                <main class="am-panel-bd">
+                    <div class="am-g">
+                        <!--头像图片-->
+                        <div class="am-u-sm-2">
+                            <!--默认头像地址imgs/topbar.jpg-->
+                            <img id="left_img" th:src="@{${adminUser.avatarImgUrl}}" alt="个人头像">
+                        </div>
+                        <!--个人信息面板-->
+                        <div class="am-u-sm-8">
+                            <h2 id="username" th:text="${adminUser.trueName}"></h2>
+                            <small style="font-size: 13px;color: #808080ad" th:text="${adminUser.personalBrief}"></small>
+                            <p style="color: #009688;">微信: [[${adminUser.wechat}]]</p>
+                            <p style="color: #009688">QQ: [[${adminUser.qq}]]</p>
+
+                            <!-- 链接触发器， href 属性为目标元素 ID amazeui的弹出层侧边栏-->
+                            <button class="am-btn am-btn-secondary" data-am-offcanvas="{target: '#my-left-bar', effect: 'push'}" style="border-radius: 80px;margin-top: 25px">点击了解一下叭!</button>
+
+                            <!-- 侧边栏内容 -->
+                            <div id="my-left-bar" class="am-offcanvas">
+                                <div class="am-offcanvas-bar">
+                                    <div class="am-offcanvas-content" style="text-align: center">
+                                    <!--侧边栏内容-->
+                                        <p>
+                                            我不愿让你一个人 <br/>
+                                            承受这世界的残忍 <br/>
+                                            我不愿眼泪陪你到 永恒
+                                        </p>
+                                        <p style="color: pink">交交朋友也挺不错的啊~!</p>
+                                        <hr>
+                                        <p style="color: orange">来加个QQ吧~</p>
+                                        <img id="wechat_img" th:src="@{imgs/qq.jpg}" style="width: 130px;height: 150px;">
+                                        <p style="color: orange">欢迎加入开发交流群~~</p>
+                                        <img id="qq_img" th:src="@{imgs/qun.png}" style="width: 130px;height: 150px;">
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </main>
+
+                <footer class="am-panel-footer" style="background: white">
+                    <a href="tencent://message/?Menu=yes&uin=1206414629&Service=300&sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a595b1714f9d45" id="first_icon" target="_blank" class="am-icon-qq am-icon-sm " title="QQ"></a>
+                    <a href="https://space.bilibili.com/218350216" target="_blank" class="am-icon-md am-icon-bitcoin" title="BiliBili"></a>
+                    <a href="https://gitee.com/wzhouzhou" target="_blank" class="am-icon-md am-icon-gg" title="码云"></a>
+                    <a href="https://github.com/wzz1206414629" target="_blank" class="am-icon-md am-icon-github" title="github"></a>
+                </footer>
+
+            </section>
+
+        <!--最新留言面板-->
+            <section class="am-panel am-panel-default">
+
+                <header class="am-panel-hd">
+                    <h3 class="am-panel-title">最新留言</h3>
+                </header>
+                <div class="am-panel-bd" style="overflow:auto" th:each="leaveMessage : ${leaveMessages}">
+
+                    <div class="am-u-sm-12">
+                        <span th:text="${leaveMessage.getTitle()}" style="color: orange"></span>
+                        <span th:text="${leaveMessage.getTime()}" style="float: right"></span>
+                    </div>
+
+                    <div class="am-u-sm-12" style="border-bottom: 1px solid #DEDEDE">
+                            <p><span style="color:orange;">[[${leaveMessage.getName()}]]</span>：[[${leaveMessage.getContent()}]]</p>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    <!--文章模块-->
+        <div class="am-u-sm-6" id="article">
+            <!--文章1-->
+            <section class="am-panel am-panel-default" th:each="article : ${articles}">
+                <main class="am-panel-bd">
+                    <header class="article-header">
+                        <h1>
+                            <a class="article-title" th:href="@{/articlePage/}+@{${article.getId()}}" th:text="${article.getArticleTitle()}" target="_blank"></a>
+                        </h1>
+
+                        <div class="article-meta row" style="display: inline">
+                            <span class="articleType am-badge am-badge-success">原创</span>
+                            <i class="am-icon-calendar"><span th:text="${article.getPublishDate()}"></span></i>
+                                <i class="am-icon-user" th:text="${article.getAuthor()}"></i>
+                                <i class="am-icon-folder"><a th:href="@{/articleType/}+@{${article.getArticleType()}}+@{/1}" th:text="${article.getArticleType()}"></a></i>
+                        </div>
+                    </header>
+                    <!--正文-->
+                    <div class="article-entry">
+                        <p th:text="${article.getArticleContent()}+..."></p>
+                    </div>
+
+                    <a th:href="@{/articlePage/}+@{${article.getId()}}" target="_blank" class="article-btn">阅读全文 <i class="am-icon-angle-double-right"></i></a>
+                </main>
+                <footer class="am-panel-footer">
+                    <a class="article-tags" th:href="@{/tagCloud/}+@{${tag}}+@{/1}" th:each="tag : ${article.getArticleTags().split(',')}">
+                        <span class="am-icon-tag" style="color:#555555;"></span>[[${tag}]]
+                    </a>
+                </footer>
+            </section>
+
+            <ul class="am-pagination" style="text-align: center">
+                <li><a th:href="@{/}+@{${prev}}">&laquo; 上一页</a></li>
+                <li><a th:href="@{/}+@{${next}}">下一页 &raquo;</a></li>
+            </ul>
+
+        </div>
+
+<!--右侧侧边栏-->
+        <div class="am-u-sm-3" id="right-bar">
+
+            <div class="widget">
+                    <div class="user-info">
+                        <i class="am-icon-quote-left" style="float: left"></i><br>
+                        <div class="">
+                            <p>恰到好处的喜欢最舒服</p>
+                            <p>你是信的开头</p>
+                            <p>诗的内容</p>
+                            <p>通话的结尾</p>
+                            <p>你是理所当然的奇迹</p>
+                            <p style="text-align: right;padding-top: 10px">---  《勾指起誓》</p>
+                        </div>
+
+                        <i class="am-icon-quote-right" style="float: right"></i>
+                        <div class="zhy-info-opinion">
+                            <p><strong>Welcome to my blog</strong></p>
+                            <p style="line-height: 25px">平淡对待<br>努力做好自己</p>
+                        </div>
+                    </div>
+            </div>
+
+            <!--侧边栏2-->
+            <div class="myStory">
+                <div class="bg-myStory">
+                    <div><a class="bg-myStory-a" th:href="@{/articleType/我的故事/1}">我的故事</a></div>
+                </div>
+                <div class="myStory-info">一台电脑，几行代码</div>
+            </div>
+
+
+            <!--右侧标签快-->
+            <div class="tag-cloud">
+                <h2 class="widget-title">标签云</h2>
+                <div class="widget-tag-cloud">
+                    <span th:each="tag : ${#strings.arraySplit(tags,',')}">
+                        <a class="categoryName" style="font-size: 15px;font-weight: 400" th:href="@{/tagCloud/}+@{${tag}}+@{/1}" th:text="${tag}"></a>
+                    </span>
+                </div>
+            </div>
+
+            <section class="am-panel am-panel-default site">
+                <header class="am-panel-hd">
+                    <h3 class="am-panel-title">
+                        <span class="am-icon-info site-icon"></span><strong> 网站信息</strong>
+                    </h3>
+                </header>
+
+                <div class="am-panel-bd">
+                    <ul class="site-default">
+                        <li><i class="am-icon-file site-default-icon"></i><span class="site-default-word">文章总数</span>：[[${articleSize}]]篇</li>
+                        <li><i class="am-icon-tags site-default-icon"></i><span class="site-default-word">标签总数</span>：[[${tagSize}]] 个</li>
+                        <li><i class="am-icon-comments-o site-default-icon"></i><span class="site-default-word">留言总数</span>：[[${leaveMessageSize}]] 条</li>
+                        <li><i class="am-icon-commenting-o site-default-icon"></i><span class="site-default-word">评论总数</span>：[[${commentSize}]] 条</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+<!--引用脚部-->
+    <div th:replace="commons/footer::footer"></div>
+</body>
+<script type="text/javascript" th:src="@{/js/index.js}"></script>
+<script>
+    //上边框头像跟个人信息栏头像同步地址
+    $("#topbar_img").attr('src',$("#left_img")[0].src);
+
+</script>
+</html>

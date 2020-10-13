@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+    <link rel="stylesheet" th:href="@{/css/amazeui.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+</head>
+
+<style>
+    .am-panel{
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+
+
+    #header-info h1,p{
+        text-align: center;
+        font-weight: 400;
+    }
+</style>
+
+<body>
+
+<!--引入公有头部-->
+
+<div th:replace="~{commons/header::topbar}"></div>
+
+<div class="am-g" id="header-info">
+    <h1><strong>客官,Hello</strong></h1>
+    <p>来做一个大侠叭<br>无忧无虑</p>
+</div>
+
+<hr>
+
+    <div class="am-u-sm-4 am-u-sm-offset-4">
+        <section class="am-panel am-panel-default" style="height: 400px;">
+            <header class="am-panel-hd">
+                <h3 class="am-panel-title" style="text-align: center">欢迎登陆</h3>
+            </header>
+            <div class="am-panel-bd">
+
+                <form class="am-form am-form-horizontal" th:action="@{login}" method="post" style="margin-top: 100px;">
+                    <div class="am-form-group">
+                        <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">账号:</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" required name="username" id="doc-ipt-3" placeholder="大侠,请输入您的武林称呼叭">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label">密码:</label>
+                        <div class="am-u-sm-10">
+                            <input type="password" required name="password" id="doc-ipt-pwd-2" placeholder="快来确认通行证叭">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <div class="am-u-sm-10 am-u-sm-offset-2">
+                            <input type="submit" class="am-btn am-btn-primary" value="登陆" style="border-radius: 80px;"></input>
+                            <span style="color: red" th:text="${msg}"></span>
+                            <a th:href="@{toForgetPwd}" class="am-btn am-btn-default" style="float:right;border-radius: 80px;">忘记密码 : )</a>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+        </section>
+
+        <!--引用脚部-->
+        <div th:replace="commons/footer::footer" style="margin-top: 100px;"></div>
+    </div>
+
+</body>
+<script type="text/javascript" th:inline="javascript">
+    //上边框头像跟个人信息栏头像同步地址
+    $("#topbar_img").attr('src','http://localhost:8080/'+[[${topbar_imgUrl}]]);
+</script>
+</html>

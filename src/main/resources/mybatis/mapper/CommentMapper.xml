@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzz.mapper.CommentMapper">
+
+<!--    查询一篇文章所有评论条数-->
+    <select id="querySumByArticle" resultType="_int">
+        select count(1) from comment where articleId = #{id}
+    </select>
+
+<!--    查询一篇文章的所有的顶级评论 及pid为0的顶楼评论-->
+    <select id="queryAllCommentPid" resultType="Comment">
+        select * from comment,article AS a,user as u where a.id=#{id} and articleId=#{id} and pid=0 and answererName=u.username group by commentDate desc
+    </select>
+
+<!--    根据id查询评论-->
+    <select id="queryCommentById" resultType="Comment">
+        select * from comment where id=#{id}
+    </select>
+
+<!--    查询一篇文章所有的评论-->
+    <select id="queryAllComment" resultType="Comment">
+        select * from comment where articleId=#{id};
+    </select>
+
+<!--    增加一条最顶级评论-->
+    <insert id="addTopComment">
+        insert into comment(articleId,answererName,commentDate,commentContent) values (#{articleId},#{username},#{commentDate},#{content})
+    </insert>
+
+<!--    添加一条评论(answererName,articleId,pid,content,time)-->
+    <insert id="addAComment">
+        insert into comment(answererName,articleId,pid,commentContent,commentDate) values (#{username},#{articleId},#{pid},#{content},#{time})
+    </insert>
+
+<!--    顶楼下回复按钮的表单数据(回复当前顶楼)-->
+    <insert id="addCommentHaveRespondentName">
+        insert into comment(answererName,respondentName,articleId,pid,commentContent,commentDate) values (#{username},#{respondentName},#{articleId},#{pid},#{content},#{time})
+
+    </insert>
+
+<!--    查询某个人的所有的评论-->
+    <select id="queryAllCommentByUsername" resultType="Comment">
+        select * from comment where answererName=#{username}
+    </select>
+
+<!--    删除一条评论及指向它的子评论-->
+    <delete id="deleteCommentById">
+        delete from comment where pid=#{id} or id=#{id}
+    </delete>
+
+<!--    查询所有评论-->
+    <select id="queryAllComments" resultType="Comment">
+        select * from comment
+    </select>
+</mapper>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--超级管理员的公用左边框-->
+<div class="container-fluid">
+        <div class="col-xs-12 col-sm-3 col-md-2" th:fragment="left-bar">
+            <div class="collapse navbar-collapse" style="position: fixed; top: 51px; bottom: 0; padding-top: 10px; z-index: 9100; background-color:#eee;" id="bs-example-js-navbar-collapse">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="heading_nr">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse_nr">
+                                    <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;内容管理&nbsp;&nbsp;<span class="caret"></span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse_nr" class="panel-collapse collapse in">
+                            <div class="list-group" style="margin-bottom: 0px;">
+                                <a th:href="@{/admin/toEditorPage}">
+                                    <button type="button" class="btn btn-default btn-block">
+                                        写文章                            </button>
+                                </a>
+                                <a th:href="@{/admin/allArticle/}+@{1}">
+                                    <button type="button" class="btn btn-default btn-block">
+                                        所有文章                            </button>
+                                </a>
+                                <a th:href="@{/admin/toCommentManage}">
+                                    <button type="button" class="btn btn-default btn-block">
+                                        评论管理                            </button>
+                                </a>
+                                <a th:href="@{/admin/toManageLeaveMessage}">
+                                    <button type="button" class="btn btn-default btn-block">
+                                        留言管理                            </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="heading_ym">
+                            <h4 class="panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_ym">
+                                    <span class="glyphicon glyphicon-file"></span>&nbsp;&nbsp;友链管理&nbsp;&nbsp;<span class="caret"></span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse_ym" class="panel-collapse collapse">
+                            <div class="list-group" style="margin-bottom: 0px;">
+                                <a th:href="@{/admin/toAddFriendLink}">
+                                    <button type="button" class="btn btn-default btn-block">
+                                        添加友情链接                            </button>
+                                </a>
+                                <a th:href="@{/admin/toManageFriendLink}">
+                                    <button type="button" class="btn btn-default btn-block">
+                                        管理友情链接                            </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="heading_yh">
+                            <h4 class="panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_yh">
+                                    <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;用户管理&nbsp;&nbsp;<span class="caret"></span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse_yh" class="panel-collapse collapse">
+                            <div class="list-group" style="margin-bottom: 0px;">
+                                <a th:href="@{/admin/toAddUser}">
+                                    <button type="button" class="btn btn-default btn-block">
+                                        添加用户                            </button>
+                                </a>
+                                <a th:href="@{/admin/allUser}+@{/1}">
+                                    <button type="button" class="btn btn-default btn-block">
+                                        管理用户                            </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="heading_xt">
+                            <h4 class="panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_xt">
+                                    <span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;系统设置&nbsp;&nbsp;<span class="caret"></span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse_xt" class="panel-collapse collapse">
+                            <div class="list-group" style="margin-bottom: 0px;">
+                                <a th:href="@{/admin/toAdminUpdateInfo}">
+                                    <button type="button" class="btn btn-default btn-block">
+                                        个人信息                            </button>
+                                </a>
+                                <a th:href="@{/admin/toAdminUpdatePwd}">
+                                    <button type="button" class="btn btn-default btn-block">
+                                        修改密码                            </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visible-xs-block">
+                    <a href="">
+                        <button type="button" class="btn btn-default btn-block"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;首页</button>
+                    </a><br>
+                </div>
+                <a th:href="@{/lgout}">
+                    <button type="button" class="btn btn-default btn-block"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;退出</button>
+                </a><br>
+            </div>
+        </div>
+
+</div>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>blog</title>
+    <link rel="stylesheet" th:href="@{/css/amazeui.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/articleType.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}" charset="utf-8">
+    <script th:src="@{/js/jquery.js}"></script>
+
+</head>
+<body>
+
+<!--引入公共的头部-->
+<div th:replace="~{commons/header::topbar}"></div>
+
+<!--主体部分-->
+<div class="am-u-sm-6 am-u-lg-offset-3">
+
+    <div class="am-u-sm-3">
+
+        <div class="categories">
+            <div class="categories-title">
+                <h3 style="font-size: 20px">TagCloud</h3>
+            </div>
+            <div class="categories-comment am-animation-slide-top">
+
+                <div class="category" style="margin-top: 10px;" th:each="tag : ${#strings.arraySplit(tags,',')}">
+                    <span>
+                        <a class="categoryName" th:href="@{/tagCloud/}+@{${tag}}+@{/1}" th:text="${tag}"></a>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="am-u-sm-9">
+
+        <div class="am-u-sm-12 am-u-md-9">
+            <div class="categoryTimeline">
+                <div class="timeline timeline-wrap">
+                    <div class="timeline-row">
+                        <span class="node" style="-webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box;">
+                            <i class="am-icon-folder"></i>
+                        </span>
+                        <h1 class="title  am-animation-slide-top" th:if="${currentTag}==null"># 全部标签</h1>
+                        <h1 class="title  am-animation-slide-top" th:if="${currentTag}!=null" th:text="'# '+${currentTag}+'('+${articleSize}+')'"></h1>
+                    </div>
+
+                    <!--时间线的一个块-->
+                    <div class="timeline-row-major" th:each="article : ${articles}">
+
+                        <span class="node am-animation-slide-top am-animation-delay-1"></span>
+                        <div class="content am-comment-main am-animation-slide-top am-animation-delay-1">
+                            <header class="am-comment-hd" style="background: #fff">
+                                <div class="contentTitle am-comment-meta">
+                                    <a th:href="@{/articlePage/}+@{${article.getId()}}" target="_blank" th:text="${article.getArticleTitle()}"></a>
+                                </div>
+                            </header>
+                            <div class="am-comment-bd">
+                                <i class="am-icon-calendar">
+                                    <a href="" th:text="${article.getPublishDate()}"></a>
+                                </i>
+
+                                <i class="am-icon-folder">
+                                    <a href="" th:text="${article.getArticleType()}"></a>
+                                </i>
+
+                                <i class="am-comment-bd-tags">
+                                    <a class="article-tags" href="" th:each="tag : ${article.getArticleTags().split(',')}">
+                                        <span class="am-icon-tag" style="color: #898d92;"></span>[[${tag}]]
+                                    </a>
+                                </i>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="am-pagination" style="text-align: center">
+                        <li><a th:href="@{${url}}+@{${type}}+'/'+@{${prev}}">&laquo; 上一页</a></li>
+                        <li><a th:href="@{${url}}+@{${type}}+'/'+@{${next}}">下一页 &raquo;</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="am-u-sm-12">
+    <!--引用脚部-->
+    <div th:replace="commons/footer::footer"></div>
+</div>
+
+
+
+</body>
+<script type="text/javascript" th:inline="javascript">
+    //上边框头像跟个人信息栏头像同步地址
+    $("#topbar_img").attr('src','http://localhost:8080/'+[[${topbar_imgUrl}]]);
+
+</script>
+
+</html>

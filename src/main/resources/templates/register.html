@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" th:href="@{/css/amazeui.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+</head>
+
+<style>
+    .am-panel{
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    #header-info h1,p{
+        text-align: center;
+        font-weight: 400;
+    }
+</style>
+
+<body>
+
+<!--引入公有头部-->
+
+<div th:replace="~{commons/header::topbar}"></div>
+
+<div class="am-g" id="header-info">
+    <h1><strong>客官,诚邀您入驻</strong></h1>
+    <p>来做一个大侠叭<br>无忧无虑</p>
+</div>
+
+<hr>
+
+    <div class="am-u-sm-4 am-u-sm-offset-4">
+        <section class="am-panel am-panel-default" style="height: 400px;">
+            <header class="am-panel-hd">
+                <h3 class="am-panel-title" style="text-align: center">欢迎客官入驻</h3>
+            </header>
+            <div class="am-panel-bd">
+
+                <form class="am-form am-form-horizontal" th:action="@{register}" method="post">
+                    <div class="am-form-group">
+                        <label for="username" class="am-u-sm-2 am-form-label">账号:</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" required name="username" id="username" onblur="check()" placeholder="大侠,请注册您的武林称呼叭">
+
+                            <img id="checkSuccess" th:src="@{/imgs/y.png}" hidden style="width: 15px;height: 15px;">
+                            <img id="checkFalse" th:src="@{/imgs/n.png}" hidden style="width: 15px;height: 15px;">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label">密码:</label>
+                        <div class="am-u-sm-10">
+                            <input type="password" required name="password" id="doc-ipt-pwd-2" placeholder="注册通行证">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="trueName" class="am-u-sm-2 am-form-label">真实姓名:</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" required name="trueName" id="trueName" placeholder="大侠,请告诉我们你的真实姓名叭">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-select-1" class="am-u-sm-2 am-form-label">性别:</label>
+                        <div class="am-u-sm-10">
+                            <select id="doc-select-1" name="gender">
+                                <option value="1">男</option>
+                                <option value="0">女</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <div class="am-u-sm-10 am-u-sm-offset-2">
+                            <input type="submit" id="submitBtn" class="am-btn am-btn-primary" value="注册" style="border-radius: 80px;"></input>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </section>
+
+        <!--引用脚部-->
+        <div th:replace="commons/footer::footer" style="margin-top: 100px;"></div>
+    </div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+//用户名ajax验证
+function check(){
+    //用户名合法性检查
+    if($("#username").val()!=''){
+        $.post({
+            url:[[@{checkUsername}]],
+            data:{"username":$("#username").val()},//传递用户名
+            success:function(data){
+                if(data.toString()==="y"){//说明用户名合法
+                    $("#checkSuccess").prop("hidden",false);
+                    $("#checkFalse").prop("hidden",true);
+                    $("#submitBtn").prop("disabled",false)
+                }else{//非法用户名
+                    $("#checkSuccess").prop("hidden",true);
+                    $("#checkFalse").prop("hidden",false);
+                    $("#submitBtn").prop("disabled",true)
+                }
+            }
+        });
+    }else{//如果用户输入为空  则都不显示
+        $("#checkSuccess").prop("hidden",true);
+        $("#checkFalse").prop("hidden",true);
+    }
+
+}
+
+//上边框头像跟个人信息栏头像同步地址
+$("#topbar_img").attr('src','http://localhost:8080/'+[[${topbar_imgUrl}]]);
+
+</script>
+</html>
