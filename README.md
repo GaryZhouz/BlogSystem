@@ -5,6 +5,12 @@
 但是功能俱全的博客系统~!
 
 ## 项目代码
+- # [ :point_right: 线上体验](http://wzzz.fun:8080/)
+``` 
+   管理员账号: wzz 
+   密码: 111
+   Tips: 为了各位有良好的体验,请不要更改演示账号的权限以及地址, 如账号异常,请加q群970804317私信群主~!
+```
 - [B站](https://www.bilibili.com/video/BV1tK4y1h71S/)
 - [码云](https://gitee.com/wzhouzhou/privateBlog/tree/master)
 - [GitHub](https://github.com/wzz1206414629/privateBlog)
