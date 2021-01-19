@@ -5,7 +5,7 @@
 但是功能俱全的博客系统~!
 
 ## 项目代码
-- # [ :point_right: 线上体验](http://wzzz.fun:8080/)
+- # [ :point_right: 线上体验](http://blog.wzzz.fun)
 ``` 
    管理员账号: wzz 
    密码: 111
