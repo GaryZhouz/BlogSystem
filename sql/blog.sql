@@ -12,7 +12,8 @@ File Encoding         : 65001
 
 Date: 2020-10-13 12:47:04
 */
-
+create database blog;
+use blog;
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------

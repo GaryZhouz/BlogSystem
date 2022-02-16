@@ -1,0 +1,21 @@
+version: 1.0.0
+services:
+  blog:
+    container_name: blog_server
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql
+  mysql:
+    container_name: blog_mysql
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=wzz233
+    privileged: true
+    volumes:
+      - /opt/blog/volume_data/mysql/data:/var/lib/mysql
+      - /opt/blog/init_sql:/docker-entrypoint-initdb.d
+      - /opt/blog/volume_data/mysql/conf:/etc/mysql/conf.d
